@@ -83927,7 +83927,7 @@ A.ZR.prototype={
 $0(){},
 $S:0}
 A.J5.prototype={
-J(a){var s=null,r=t.D,q=A.ku(A.c([new A.n3(B.nk,"https://github.com/myounis007",s),new A.n3(B.El,"https://linkedin.com/in/",s),new A.n3(B.En,"https://twitter.com/",s),new A.n3(B.Ej,"https://upwork.com/",s),new A.n3(B.Eo,"https://wa.me/",s)],r),B.ag,B.eS,B.as,0),p=A.K(a).ax.k3
+J(a){var s=null,r=t.D,q=A.ku(A.c([new A.n3(B.nk,"https://github.com/myounis007",s),new A.n3(B.El,"https://www.linkedin.com/in/muhammad-younis-b0ba83254?utm_source=share_via&utm_content=profile&utm_medium=member_android",s),new A.n3(B.En,"https://twitter.com/",s),new A.n3(B.Ej,"https://upwork.com/",s),new A.n3(B.Eo,"https://wa.me/923453454707",s)],r),B.ag,B.eS,B.as,0),p=A.K(a).ax.k3
 return new A.cZ(B.E3,A.he(A.c([q,B.fb,A.cG("Designed & Built by Muhammad Younis",s,s,s,A.nk().$1$color(A.ad(B.c.aB(178.5),p.p()>>>16&255,p.p()>>>8&255,p.p()&255)),s,s),B.fc,A.cG("Built with Flutter Web",s,s,s,A.qv().$2$color$fontSize(A.K(a).dx,12),s,s)],r),B.ag,B.a7,B.as),s)}}
 A.n3.prototype={
 J(a){var s=null,r=A.aw_(this.c,s,s),q=A.K(a).ax.k3
