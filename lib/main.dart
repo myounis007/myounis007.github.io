@@ -34,8 +34,12 @@ class PortfolioApp extends StatelessWidget {
     final isDark = brightness == Brightness.dark;
     final primaryColor = const Color(0xFF54C5F8); // Flutter Blue
     final bgColor = isDark ? const Color(0xFF0A192F) : const Color(0xFFF8FAFC);
-    final surfaceColor = isDark ? const Color(0xFF112240) : const Color(0xFFFFFFFF);
-    final textColor = isDark ? const Color(0xFFCCD6F6) : const Color(0xFF1E293B);
+    final surfaceColor = isDark
+        ? const Color(0xFF112240)
+        : const Color(0xFFFFFFFF);
+    final textColor = isDark
+        ? const Color(0xFFCCD6F6)
+        : const Color(0xFF1E293B);
 
     return ThemeData(
       brightness: brightness,
@@ -78,12 +82,15 @@ class _LoadingScreenState extends State<LoadingScreen>
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     );
-    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 0.5,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
     _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
-          parent: _controller, curve: const Interval(0.8, 1.0, curve: Curves.easeOut)),
+        parent: _controller,
+        curve: const Interval(0.8, 1.0, curve: Curves.easeOut),
+      ),
     );
 
     _controller.forward().then((_) {
@@ -91,10 +98,8 @@ class _LoadingScreenState extends State<LoadingScreen>
         PageRouteBuilder(
           pageBuilder: (_, __, ___) => const PortfolioHome(),
           transitionDuration: const Duration(milliseconds: 800),
-          transitionsBuilder: (_, anim, __, child) => FadeTransition(
-            opacity: anim,
-            child: child,
-          ),
+          transitionsBuilder: (_, anim, __, child) =>
+              FadeTransition(opacity: anim, child: child),
         ),
       );
     });
@@ -139,8 +144,11 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   void _scrollTo(GlobalKey key) {
     final context = key.currentContext;
     if (context != null) {
-      Scrollable.ensureVisible(context,
-          duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
@@ -163,7 +171,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               painter: WidgetTreePainter(Theme.of(context).colorScheme),
             ),
           ),
-          
+
           // Main Scrollable Content
           CustomScrollView(
             controller: _scrollController,
@@ -171,7 +179,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               SliverAppBar(
                 pinned: true,
                 elevation: 0,
-                backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.9),
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.background.withOpacity(0.9),
                 title: Row(
                   children: [
                     Container(
@@ -198,40 +208,57 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                 ),
                 actions: isDesktop
                     ? [
-                        _NavBtn(title: 'Home', onTap: () => _scrollTo(_homeKey)),
-                        _NavBtn(title: 'Skills', onTap: () => _scrollTo(_skillsKey)),
-                        _NavBtn(title: 'Projects', onTap: () => _scrollTo(_projectsKey)),
-                        _NavBtn(title: 'Contact', onTap: () => _scrollTo(_contactKey)),
+                        _NavBtn(
+                          title: 'Home',
+                          onTap: () => _scrollTo(_homeKey),
+                        ),
+                        _NavBtn(
+                          title: 'Skills',
+                          onTap: () => _scrollTo(_skillsKey),
+                        ),
+                        _NavBtn(
+                          title: 'Projects',
+                          onTap: () => _scrollTo(_projectsKey),
+                        ),
+                        _NavBtn(
+                          title: 'Contact',
+                          onTap: () => _scrollTo(_contactKey),
+                        ),
                         const SizedBox(width: 16),
                         IconButton(
-                          icon: Icon(themeNotifier.value == ThemeMode.dark
-                              ? Icons.light_mode
-                              : Icons.dark_mode),
+                          icon: Icon(
+                            themeNotifier.value == ThemeMode.dark
+                                ? Icons.light_mode
+                                : Icons.dark_mode,
+                          ),
                           onPressed: () {
                             themeNotifier.value =
                                 themeNotifier.value == ThemeMode.dark
-                                    ? ThemeMode.light
-                                    : ThemeMode.dark;
+                                ? ThemeMode.light
+                                : ThemeMode.dark;
                           },
                         ),
                         const SizedBox(width: 24),
                       ]
                     : [
                         IconButton(
-                          icon: Icon(themeNotifier.value == ThemeMode.dark
-                              ? Icons.light_mode
-                              : Icons.dark_mode),
+                          icon: Icon(
+                            themeNotifier.value == ThemeMode.dark
+                                ? Icons.light_mode
+                                : Icons.dark_mode,
+                          ),
                           onPressed: () {
                             themeNotifier.value =
                                 themeNotifier.value == ThemeMode.dark
-                                    ? ThemeMode.light
-                                    : ThemeMode.dark;
+                                ? ThemeMode.light
+                                : ThemeMode.dark;
                           },
                         ),
                         Builder(
                           builder: (context) => IconButton(
                             icon: const Icon(Icons.menu),
-                            onPressed: () => Scaffold.of(context).openEndDrawer(),
+                            onPressed: () =>
+                                Scaffold.of(context).openEndDrawer(),
                           ),
                         ),
                       ],
@@ -271,33 +298,35 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               child: ListView(
                 padding: const EdgeInsets.all(24),
                 children: [
-                  const DrawerHeader(
-                    child: FlutterLogo(size: 80),
+                  const DrawerHeader(child: FlutterLogo(size: 80)),
+                  ListTile(
+                    title: const Text('Home'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _scrollTo(_homeKey);
+                    },
                   ),
                   ListTile(
-                      title: const Text('Home'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _scrollTo(_homeKey);
-                      }),
+                    title: const Text('Skills'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _scrollTo(_skillsKey);
+                    },
+                  ),
                   ListTile(
-                      title: const Text('Skills'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _scrollTo(_skillsKey);
-                      }),
+                    title: const Text('Projects'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _scrollTo(_projectsKey);
+                    },
+                  ),
                   ListTile(
-                      title: const Text('Projects'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _scrollTo(_projectsKey);
-                      }),
-                  ListTile(
-                      title: const Text('Contact'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _scrollTo(_contactKey);
-                      }),
+                    title: const Text('Contact'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _scrollTo(_contactKey);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -334,9 +363,11 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.of(context).size.width > 800;
-    
+
     final content = Column(
-      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: isDesktop
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
       children: [
         Text(
           "Hi, my name is",
@@ -380,19 +411,29 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         Row(
-          mainAxisAlignment: isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisAlignment: isDesktop
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.download, color: Colors.white),
               label: const Text(
                 'Download CV',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 20,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
             ),
             const SizedBox(width: 16),
@@ -401,9 +442,17 @@ class HeroSection extends StatelessWidget {
                 launchUrl(Uri.parse('https://github.com/myounis007'));
               },
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 20,
+                ),
+                side: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                  width: 2,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
               child: Text(
                 'GitHub',
@@ -431,9 +480,14 @@ class HeroSection extends StatelessWidget {
                   height: 400,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Theme.of(context).primaryColor, width: 4),
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                      width: 4,
+                    ),
                     image: const DecorationImage(
-                      image: AssetImage('assets/portfoliopic.png'), // Keep if exists, otherwise fallback
+                      image: AssetImage(
+                        'assets/portfoliopic.png',
+                      ), // Keep if exists, otherwise fallback
                       fit: BoxFit.cover,
                     ),
                     boxShadow: [
@@ -475,7 +529,9 @@ class StatsSection extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2)),
+          border: Border.all(
+            color: Theme.of(context).primaryColor.withOpacity(0.2),
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -506,7 +562,11 @@ class _StatCounter extends StatelessWidget {
   final String title;
   final String suffix;
 
-  const _StatCounter({required this.end, required this.title, required this.suffix});
+  const _StatCounter({
+    required this.end,
+    required this.title,
+    required this.suffix,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -569,13 +629,34 @@ class SkillsSection extends StatelessWidget {
                 childAspectRatio: isDesktop ? 6 : 4,
                 children: const [
                   _SkillBar(name: 'Flutter SDK (2.x, 3.x)', level: 0.95),
-                  _SkillBar(name: 'Dart (Null Safety, Streams, Isolates)', level: 0.90),
-                  _SkillBar(name: 'State Management (Riverpod, GetX, BLoC)', level: 0.92),
-                  _SkillBar(name: 'Backend & Data (Firebase, REST, GraphQL)', level: 0.85),
-                  _SkillBar(name: 'Local Storage (Hive, Isar, SQLite)', level: 0.88),
-                  _SkillBar(name: 'Animations (Implicit, Rive, Lottie)', level: 0.80),
-                  _SkillBar(name: 'UI/UX (Responsive, Platform Channels)', level: 0.95),
-                  _SkillBar(name: 'DevOps & CI/CD (GitHub Actions, Fastlane)', level: 0.75),
+                  _SkillBar(
+                    name: 'Dart (Null Safety, Streams, Isolates)',
+                    level: 0.90,
+                  ),
+                  _SkillBar(
+                    name: 'State Management (Riverpod, GetX, BLoC)',
+                    level: 0.92,
+                  ),
+                  _SkillBar(
+                    name: 'Backend & Data (Firebase, REST, GraphQL)',
+                    level: 0.85,
+                  ),
+                  _SkillBar(
+                    name: 'Local Storage (Hive, Isar, SQLite)',
+                    level: 0.88,
+                  ),
+                  _SkillBar(
+                    name: 'Animations (Implicit, Rive, Lottie)',
+                    level: 0.80,
+                  ),
+                  _SkillBar(
+                    name: 'UI/UX (Responsive, Platform Channels)',
+                    level: 0.95,
+                  ),
+                  _SkillBar(
+                    name: 'DevOps & CI/CD (GitHub Actions, Fastlane)',
+                    level: 0.75,
+                  ),
                 ],
               );
             },
@@ -666,7 +747,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Papyrus',
       'category': 'Web',
-      'description': 'A web-responsive document & project management tool with professional desktop-first standards.',
+      'description':
+          'A web-responsive document & project management tool with professional desktop-first standards.',
       'stack': 'Flutter Web, GoRouter, Riverpod',
       'targets': 'Web, Desktop',
       'features': 'Professional UI, Sidebar Navigation, Review Queue',
@@ -677,7 +759,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'FloHealthyApp',
       'category': 'Mobile',
-      'description': 'A comprehensive pregnancy tracking app with offline fallback and real-time backend synchronization.',
+      'description':
+          'A comprehensive pregnancy tracking app with offline fallback and real-time backend synchronization.',
       'stack': 'Flutter 3.x, SQLite/Hive, REST APIs',
       'targets': 'Android, iOS',
       'features': 'Offline Fallback, Weekly Milestones, Period Tracking',
@@ -688,7 +771,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'ZePrompt',
       'category': 'Cross-platform',
-      'description': 'A modern prompt engine interface featuring a futuristic glassmorphic design and cyber-iridescent elements.',
+      'description':
+          'A modern prompt engine interface featuring a futuristic glassmorphic design and cyber-iridescent elements.',
       'stack': 'Flutter, Custom Animations, Provider',
       'targets': 'Android, Web, Desktop',
       'features': 'Glassmorphic UI, Prompt Handling, Dark Mode',
@@ -699,7 +783,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Clustivo',
       'category': 'Mobile',
-      'description': 'Connect with people nearby who share your interests using powerful location-based matching.',
+      'description':
+          'Connect with people nearby who share your interests using powerful location-based matching.',
       'stack': 'Flutter, Firebase, Google Maps',
       'targets': 'Android, iOS',
       'features': 'Geolocator, Real-time Chat, Map Integration',
@@ -710,7 +795,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'PromptEngine',
       'category': 'Web',
-      'description': 'A robust prompt generation tool utilizing advanced state management and clean architecture patterns.',
+      'description':
+          'A robust prompt generation tool utilizing advanced state management and clean architecture patterns.',
       'stack': 'Flutter, BLoC/Cubit, TDD',
       'targets': 'Web',
       'features': 'Clean Architecture, Robust Controller Logic',
@@ -721,7 +807,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Mekaaz',
       'category': 'Cross-platform',
-      'description': 'An innovative e-commerce/booking platform with highly responsive UI and smooth transitions.',
+      'description':
+          'An innovative e-commerce/booking platform with highly responsive UI and smooth transitions.',
       'stack': 'Flutter, Firebase, REST APIs',
       'targets': 'Android, iOS, Web',
       'features': 'Shopping Cart, Payment Gateway, Admin Dashboard',
@@ -732,7 +819,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Luna',
       'category': 'Mobile',
-      'description': 'Modern mental health and wellness tracker with soothing UI and lottie animations.',
+      'description':
+          'Modern mental health and wellness tracker with soothing UI and lottie animations.',
       'stack': 'Flutter, Lottie, Provider',
       'targets': 'Android, iOS',
       'features': 'Mood Tracking, Journaling, Reminders',
@@ -743,7 +831,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Doorstep Partner',
       'category': 'Mobile',
-      'description': 'A dedicated delivery and service partner application with real-time route tracking.',
+      'description':
+          'A dedicated delivery and service partner application with real-time route tracking.',
       'stack': 'Flutter, Google Maps, WebSockets',
       'targets': 'Android',
       'features': 'Live Tracking, Push Notifications, Earnings Dashboard',
@@ -754,7 +843,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Food Delivery',
       'category': 'Mobile',
-      'description': 'A fast, user-friendly food delivery application with seamless payment integration.',
+      'description':
+          'A fast, user-friendly food delivery application with seamless payment integration.',
       'stack': 'Flutter, Stripe, GetX',
       'targets': 'Android, iOS',
       'features': 'Restaurant Browsing, Cart, Stripe Checkout',
@@ -786,8 +876,12 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 label: Text(
                   category,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    color: isSelected
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.onSurface,
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 ),
                 selected: isSelected,
@@ -809,7 +903,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: isDesktop ? 3 : (constraints.maxWidth > 600 ? 2 : 1),
+                  crossAxisCount: isDesktop
+                      ? 3
+                      : (constraints.maxWidth > 600 ? 2 : 1),
                   childAspectRatio: 0.85,
                   crossAxisSpacing: 24,
                   mainAxisSpacing: 24,
@@ -859,14 +955,14 @@ class _ProjectCardState extends State<_ProjectCard> {
                     color: Theme.of(context).primaryColor.withOpacity(0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
-                  )
+                  ),
                 ]
               : [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
-                  )
+                  ),
                 ],
         ),
         child: ClipRRect(
@@ -883,9 +979,13 @@ class _ProjectCardState extends State<_ProjectCard> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.background,
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(16),
+                      ),
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.1),
                         width: 2,
                       ),
                     ),
@@ -927,17 +1027,27 @@ class _ProjectCardState extends State<_ProjectCard> {
                             children: [
                               if (widget.project['github'].isNotEmpty)
                                 InkWell(
-                                  onTap: () => launchUrl(Uri.parse(widget.project['github'])),
-                                  child: const FaIcon(FontAwesomeIcons.github, size: 20),
+                                  onTap: () => launchUrl(
+                                    Uri.parse(widget.project['github']),
+                                  ),
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.github,
+                                    size: 20,
+                                  ),
                                 ),
                               const SizedBox(width: 12),
                               if (widget.project['demo'].isNotEmpty)
                                 InkWell(
-                                  onTap: () => launchUrl(Uri.parse(widget.project['demo'])),
-                                  child: const FaIcon(FontAwesomeIcons.externalLinkAlt, size: 18),
+                                  onTap: () => launchUrl(
+                                    Uri.parse(widget.project['demo']),
+                                  ),
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    size: 18,
+                                  ),
                                 ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -945,7 +1055,9 @@ class _ProjectCardState extends State<_ProjectCard> {
                         widget.project['description'],
                         style: GoogleFonts.inter(
                           fontSize: 14,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.7),
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -1011,7 +1123,7 @@ class ContactSection extends StatelessWidget {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.05),
                         blurRadius: 20,
-                      )
+                      ),
                     ],
                   ),
                   child: Column(
@@ -1029,11 +1141,17 @@ class ContactSection extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 20),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
                           child: const Text(
                             'Say Hello',
-                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -1048,7 +1166,11 @@ class ContactSection extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(BuildContext context, String label, {int maxLines = 1}) {
+  Widget _buildTextField(
+    BuildContext context,
+    String label, {
+    int maxLines = 1,
+  }) {
     return TextField(
       maxLines: maxLines,
       decoration: InputDecoration(
@@ -1056,15 +1178,22 @@ class ContactSection extends StatelessWidget {
         alignLabelWithHint: maxLines > 1,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2)),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2)),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2,
+          ),
         ),
         filled: true,
         fillColor: Theme.of(context).colorScheme.background,
@@ -1089,11 +1218,26 @@ class FooterSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _SocialIcon(icon: FontAwesomeIcons.github, url: 'https://github.com/myounis007'),
-              _SocialIcon(icon: FontAwesomeIcons.linkedin, url: 'https://linkedin.com/in/'),
-              _SocialIcon(icon: FontAwesomeIcons.twitter, url: 'https://twitter.com/'),
-              _SocialIcon(icon: FontAwesomeIcons.upwork, url: 'https://upwork.com/'),
-              _SocialIcon(icon: FontAwesomeIcons.whatsapp, url: 'https://wa.me/'), // <-- Add your WhatsApp number after the slash (e.g., https://wa.me/923000000000)
+              _SocialIcon(
+                icon: FontAwesomeIcons.github,
+                url: 'https://github.com/myounis007',
+              ),
+              _SocialIcon(
+                icon: FontAwesomeIcons.linkedin,
+                url: 'https://www.linkedin.com/in/muhammad-younis-b0ba83254?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+              ),
+              _SocialIcon(
+                icon: FontAwesomeIcons.twitter,
+                url: 'https://twitter.com/',
+              ),
+              _SocialIcon(
+                icon: FontAwesomeIcons.upwork,
+                url: 'https://upwork.com/',
+              ),
+              _SocialIcon(
+                icon: FontAwesomeIcons.whatsapp,
+                url: 'https://wa.me/923453454707',
+              ), // <-- Add your WhatsApp number after the slash (e.g., https://wa.me/923000000000)
             ],
           ),
           const SizedBox(height: 24),
@@ -1150,10 +1294,16 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: center ? MainAxisAlignment.center : MainAxisAlignment.start,
+      mainAxisAlignment: center
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.start,
       children: [
         if (center)
-          Expanded(child: Divider(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2))),
+          Expanded(
+            child: Divider(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+            ),
+          ),
         if (center) const SizedBox(width: 24),
         Text(
           title,
@@ -1165,9 +1315,17 @@ class _SectionHeader extends StatelessWidget {
         ),
         const SizedBox(width: 24),
         if (!center)
-          Expanded(child: Divider(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2))),
+          Expanded(
+            child: Divider(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+            ),
+          ),
         if (center)
-          Expanded(child: Divider(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2))),
+          Expanded(
+            child: Divider(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+            ),
+          ),
       ],
     );
   }
@@ -1183,7 +1341,8 @@ class FadeInOnScroll extends StatefulWidget {
   State<FadeInOnScroll> createState() => _FadeInOnScrollState();
 }
 
-class _FadeInOnScrollState extends State<FadeInOnScroll> with SingleTickerProviderStateMixin {
+class _FadeInOnScrollState extends State<FadeInOnScroll>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -1191,10 +1350,19 @@ class _FadeInOnScrollState extends State<FadeInOnScroll> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
-    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.2), end: Offset.zero).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.2),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
     Future.delayed(Duration(milliseconds: (widget.delay * 1000).toInt()), () {
       if (mounted) _controller.forward();
     });
@@ -1210,10 +1378,7 @@ class _FadeInOnScrollState extends State<FadeInOnScroll> with SingleTickerProvid
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: _fadeAnimation,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: widget.child,
-      ),
+      child: SlideTransition(position: _slideAnimation, child: widget.child),
     );
   }
 }
@@ -1230,10 +1395,20 @@ class WidgetTreePainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final double nodeSize = 40;
-    
+
     // Draw some random widget tree nodes in the background
     void drawNode(double x, double y) {
-      canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromCenter(center: Offset(x, y), width: nodeSize, height: nodeSize), const Radius.circular(8)), paint);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromCenter(
+            center: Offset(x, y),
+            width: nodeSize,
+            height: nodeSize,
+          ),
+          const Radius.circular(8),
+        ),
+        paint,
+      );
     }
 
     void drawLine(Offset start, Offset end) {
