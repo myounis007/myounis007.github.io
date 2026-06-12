@@ -416,7 +416,9 @@ class HeroSection extends StatelessWidget {
               : MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                launchUrl(Uri.parse('Muhammad_Younis_Cv.pdf'));
+              },
               icon: const Icon(Icons.download, color: Colors.white),
               label: const Text(
                 'Download CV',
