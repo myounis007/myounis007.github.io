@@ -174,7 +174,18 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                 backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.9),
                 title: Row(
                   children: [
-                    const FlutterLogo(size: 30),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: FaIcon(
+                        FontAwesomeIcons.laptopCode,
+                        size: 20,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                     const SizedBox(width: 12),
                     Text(
                       'Muhammad Younis',
@@ -433,9 +444,6 @@ class HeroSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Center(
-                    child: FlutterLogo(size: 200, style: FlutterLogoStyle.markOnly),
-                  ), // Fallback if image fails
                 ),
               ),
             ),
@@ -1085,6 +1093,7 @@ class FooterSection extends StatelessWidget {
               _SocialIcon(icon: FontAwesomeIcons.linkedin, url: 'https://linkedin.com/in/'),
               _SocialIcon(icon: FontAwesomeIcons.twitter, url: 'https://twitter.com/'),
               _SocialIcon(icon: FontAwesomeIcons.upwork, url: 'https://upwork.com/'),
+              _SocialIcon(icon: FontAwesomeIcons.whatsapp, url: 'https://wa.me/'), // <-- Add your WhatsApp number after the slash (e.g., https://wa.me/923000000000)
             ],
           ),
           const SizedBox(height: 24),
