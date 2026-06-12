@@ -41,7 +41,7 @@ class HeroSection extends StatelessWidget {
           style: GoogleFonts.spaceGrotesk(
             fontSize: isDesktop ? 48 : 32,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             height: 1.1,
           ),
         ),
@@ -51,7 +51,7 @@ class HeroSection extends StatelessWidget {
           textAlign: isDesktop ? TextAlign.left : TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: 18,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
             height: 1.6,
           ),
         ),
@@ -140,7 +140,7 @@ class HeroSection extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).primaryColor.withOpacity(0.3),
+                        color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
                         blurRadius: 60,
                         spreadRadius: 10,
                       ),

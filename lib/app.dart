@@ -9,7 +9,7 @@ class PortfolioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
-      builder: (_, currentMode, __) {
+      builder: (context, currentMode, child) {
         return MaterialApp(
           title: 'Muhammad Younis - Senior Flutter Developer',
           debugShowCheckedModeBanner: false,

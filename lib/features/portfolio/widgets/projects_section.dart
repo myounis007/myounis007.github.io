@@ -218,21 +218,21 @@ class _ProjectCardState extends State<_ProjectCard> {
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        transform: Matrix4.identity()..translate(0.0, _isHovered ? -10.0 : 0.0),
+        transform: Matrix4.translationValues(0.0, _isHovered ? -10.0 : 0.0, 0.0),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: _isHovered
               ? [
                   BoxShadow(
-                    color: Theme.of(context).primaryColor.withOpacity(0.3),
+                    color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
                 ]
               : [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -246,18 +246,18 @@ class _ProjectCardState extends State<_ProjectCard> {
               Expanded(
                 flex: 3,
                 child: Container(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                   padding: const EdgeInsets.only(top: 24, left: 24, right: 24),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(16),
                       ),
                       border: Border.all(
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withOpacity(0.1),
+                        ).colorScheme.onSurface.withValues(alpha: 0.1),
                         width: 2,
                       ),
                     ),
@@ -267,7 +267,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                             ? Icons.phone_android
                             : Icons.web,
                         size: 64,
-                        color: Theme.of(context).primaryColor.withOpacity(0.5),
+                        color: Theme.of(context).primaryColor.withValues(alpha: 0.5),
                       ),
                     ),
                   ),
@@ -313,7 +313,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                                     Uri.parse(widget.project['demo']),
                                   ),
                                   child: const FaIcon(
-                                    FontAwesomeIcons.externalLinkAlt,
+                                    FontAwesomeIcons.upRightFromSquare,
                                     size: 18,
                                   ),
                                 ),
@@ -328,7 +328,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                           fontSize: 14,
                           color: Theme.of(
                             context,
-                          ).colorScheme.onSurface.withOpacity(0.7),
+                          ).colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,

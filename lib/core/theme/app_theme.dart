@@ -21,8 +21,8 @@ ThemeData buildAppTheme(Brightness brightness) {
       secondary: const Color(0xFF0175C2), // Dart Blue
       surface: surfaceColor,
       onSurface: textColor,
-      background: bgColor,
-      onBackground: textColor,
+      
+      
     ),
     textTheme: GoogleFonts.interTextTheme(
       ThemeData(brightness: brightness).textTheme,

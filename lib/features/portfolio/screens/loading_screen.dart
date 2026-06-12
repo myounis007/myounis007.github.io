@@ -35,9 +35,9 @@ class _LoadingScreenState extends State<LoadingScreen>
     _controller.forward().then((_) {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const PortfolioHome(),
+          pageBuilder: (context, anim, secondaryAnim) => const PortfolioHome(),
           transitionDuration: const Duration(milliseconds: 800),
-          transitionsBuilder: (_, anim, __, child) =>
+          transitionsBuilder: (context, anim, secondaryAnim, child) =>
               FadeTransition(opacity: anim, child: child),
         ),
       );

@@ -41,7 +41,7 @@ class FooterSection extends StatelessWidget {
           Text(
             'Designed & Built by Muhammad Younis',
             style: GoogleFonts.spaceGrotesk(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 8),
@@ -70,7 +70,7 @@ class _SocialIcon extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: IconButton(
         icon: FaIcon(icon),
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
         hoverColor: Theme.of(context).primaryColor,
         onPressed: () => launchUrl(Uri.parse(url)),
       ),

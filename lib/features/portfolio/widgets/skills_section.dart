@@ -101,7 +101,7 @@ class _SkillBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           child: Container(
             height: 10,
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
             child: TweenAnimationBuilder<double>(
               tween: Tween<double>(begin: 0, end: level),
               duration: const Duration(seconds: 2),

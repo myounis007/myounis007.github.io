@@ -7,7 +7,7 @@ class WidgetTreePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = colorScheme.onSurface.withOpacity(0.02)
+      ..color = colorScheme.onSurface.withValues(alpha: 0.02)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 

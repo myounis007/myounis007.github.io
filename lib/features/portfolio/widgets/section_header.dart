@@ -17,7 +17,7 @@ class SectionHeader extends StatelessWidget {
         if (center)
           Expanded(
             child: Divider(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2),
             ),
           ),
         if (center) const SizedBox(width: 24),
@@ -33,13 +33,13 @@ class SectionHeader extends StatelessWidget {
         if (!center)
           Expanded(
             child: Divider(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2),
             ),
           ),
         if (center)
           Expanded(
             child: Divider(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2),
             ),
           ),
       ],
