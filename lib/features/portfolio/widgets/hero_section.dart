@@ -1,7 +1,9 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/utils/fade_in_on_scroll.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -15,6 +17,47 @@ class HeroSection extends StatelessWidget {
           ? CrossAxisAlignment.start
           : CrossAxisAlignment.center,
       children: [
+        // Available for projects pill
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xFF10B981).withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: const Color(0xFF10B981).withValues(alpha: 0.3),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF10B981),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF10B981),
+                      blurRadius: 8,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                "Available for freelance projects",
+                style: GoogleFonts.inter(
+                  color: const Color(0xFF10B981),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 32),
         Text(
           "Hi, my name is",
           style: GoogleFonts.spaceGrotesk(
@@ -35,27 +78,53 @@ class HeroSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
-          "Crafting pixel-perfect cross-platform apps.",
-          textAlign: isDesktop ? TextAlign.left : TextAlign.center,
-          style: GoogleFonts.spaceGrotesk(
-            fontSize: isDesktop ? 48 : 32,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-            height: 1.1,
+        SizedBox(
+          height: isDesktop ? 120 : 120,
+          child: DefaultTextStyle(
+            style: GoogleFonts.spaceGrotesk(
+              fontSize: isDesktop ? 48 : 32,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.6),
+              height: 1.1,
+            ),
+            textAlign: isDesktop ? TextAlign.left : TextAlign.center,
+            child: AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  'Engineering experiences, not just apps.',
+                  speed: const Duration(milliseconds: 80),
+                ),
+                TypewriterAnimatedText(
+                  'Turning Figma frames into fluid reality.',
+                  speed: const Duration(milliseconds: 80),
+                ),
+
+                TypewriterAnimatedText(
+                  'Dart-powered. Design-obsessed.',
+                  speed: const Duration(milliseconds: 80),
+                ),
+              ],
+              repeatForever: true,
+              displayFullTextOnTap: true,
+              stopPauseOnTap: true,
+            ),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 16),
         Text(
-          "I'm a Senior Flutter Developer based in Multan, Pakistan with over 2 years of experience. I specialize in building highly responsive, beautiful, and performant mobile, web, and desktop applications using Flutter and Dart.",
+          "Building highly responsive, scalable, and performant mobile, web, and desktop applications using Flutter and Dart.",
           textAlign: isDesktop ? TextAlign.left : TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: 18,
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.7),
             height: 1.6,
           ),
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 32),
         Row(
           mainAxisAlignment: isDesktop
               ? MainAxisAlignment.start
@@ -124,27 +193,70 @@ class HeroSection extends StatelessWidget {
             Expanded(
               flex: 2,
               child: FadeInOnScroll(
-                child: Container(
-                  height: 400,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Theme.of(context).primaryColor,
-                      width: 4,
+                child: Center(
+                  child: SizedBox(
+                    width: 400,
+                    height: 400,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Background Ambient Glow
+                        Container(
+                          width: 340,
+                          height: 340,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(
+                                  context,
+                                ).primaryColor.withValues(alpha: 0.5),
+                                blurRadius: 100,
+                                spreadRadius: 20,
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Outer Frosted Glass Ring
+                        ClipOval(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+                            child: Container(
+                              width: 400,
+                              height: 400,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.surface.withValues(alpha: 0.1),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.2),
+                                  width: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Inner Image Container
+                        Container(
+                          width: 360,
+                          height: 360,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Theme.of(
+                                context,
+                              ).primaryColor.withValues(alpha: 0.8),
+                              width: 3,
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/portfoliopic.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/portfoliopic.png',
-                      ), // Keep if exists, otherwise fallback
-                      fit: BoxFit.cover,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
-                        blurRadius: 60,
-                        spreadRadius: 10,
-                      ),
-                    ],
                   ),
                 ),
               ),

@@ -23,11 +23,7 @@ class SectionHeader extends StatelessWidget {
         if (center) const SizedBox(width: 24),
         Text(
           title,
-          style: GoogleFonts.spaceGrotesk(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(width: 24),
         if (!center)

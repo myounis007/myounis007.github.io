@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/utils/fade_in_on_scroll.dart';
@@ -8,34 +9,68 @@ class StatsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInOnScroll(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24),
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+          child: Container(
+            padding: const EdgeInsets.all(40),
+            decoration: BoxDecoration(
+              color: Theme.of(
+                context,
+              ).colorScheme.surface.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(32),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.05),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.05),
+                  blurRadius: 30,
+                  spreadRadius: -5,
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Wrap(
-          alignment: WrapAlignment.spaceEvenly,
-          spacing: 40,
-          runSpacing: 40,
-          children: const [
-            _StatCounter(end: 12, title: 'Apps Published', suffix: '+'),
-            _StatCounter(end: 2, title: 'Years Experience', suffix: '+'),
-            _StatCounter(end: 50, title: 'Happy Clients', suffix: '+'),
-            _StatCounter(end: 100, title: 'GitHub Stars', suffix: '+'),
-            _StatCounter(end: 15, title: 'Countries Reached', suffix: ''),
-          ],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Expanded(
+                      child: _StatCounter(
+                        end: 10,
+                        title: 'Apps Published',
+                        suffix: '+',
+                      ),
+                    ),
+                    Expanded(
+                      child: _StatCounter(
+                        end: 2,
+                        title: 'Years Experience',
+                        suffix: '+',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 48),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Expanded(
+                      child: _StatCounter(
+                        end: 8,
+                        title: 'Happy Clients',
+                        suffix: '+',
+                      ),
+                    ),
+                    // Expanded(child: _StatCounter(end: 100, title: 'GitHub Stars', suffix: '+')),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -65,7 +100,7 @@ class _StatCounter extends StatelessWidget {
             return Text(
               '$value$suffix',
               style: GoogleFonts.spaceGrotesk(
-                fontSize: 48,
+                fontSize: 40,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
               ),
@@ -75,9 +110,12 @@ class _StatCounter extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           title,
+          textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: 16,
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.7),
           ),
         ),
       ],
