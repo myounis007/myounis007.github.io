@@ -6,7 +6,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/widget_tree_painter.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/about_section.dart';
-import '../widgets/stats_section.dart';
+
 import '../widgets/skills_section.dart';
 import '../widgets/projects_section.dart';
 import '../widgets/contact_section.dart';

@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -81,29 +80,13 @@ class FooterSection extends StatelessWidget {
   }
 
   Widget _buildCopyrightText(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "BluePrint Solutions",
-          style: GoogleFonts.spaceGrotesk(
-            color: Theme.of(
-              context,
-            ).colorScheme.onSurface.withValues(alpha: 0.7),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        Text(
-          '© ${DateTime.now().year} All rights reserved.',
-          style: GoogleFonts.spaceGrotesk(
-            color: Theme.of(
-              context,
-            ).colorScheme.onSurface.withValues(alpha: 0.7),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+    return Text(
+      '© ${DateTime.now().year} Muhammad Younis. All rights reserved.',
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+        letterSpacing: 1.2,
+      ),
     );
   }
 }

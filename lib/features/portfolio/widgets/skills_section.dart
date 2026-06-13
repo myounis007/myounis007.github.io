@@ -36,6 +36,15 @@ class SkillsSection extends StatelessWidget {
           {'name': 'Git, CI/CD & Fastlane', 'level': 0.80},
         ],
       },
+      {
+        'title': 'Advanced Features',
+        'icon': Icons.extension_rounded,
+        'skills': [
+          {'name': 'AI Integrations', 'level': 0.85},
+          {'name': 'Maps & Payments', 'level': 0.88},
+          {'name': 'Push Notifications', 'level': 0.90},
+        ],
+      },
     ];
 
     return Padding(
@@ -103,7 +112,11 @@ class _CategoryCardState extends State<_CategoryCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeOutCubic,
-        transform: Matrix4.identity()..translate(0.0, _isHovered ? -12.0 : 0.0),
+        transform: Matrix4.translationValues(
+          0.0,
+          _isHovered ? -12.0 : 0.0,
+          0.0,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(32),
           child: BackdropFilter(
@@ -210,17 +223,21 @@ class _SkillRow extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              name,
-              style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface.withValues(alpha: 0.9),
+            Expanded(
+              child: Text(
+                name,
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.9),
+                ),
               ),
             ),
+            const SizedBox(width: 8),
             Text(
               '${(level * 100).toInt()}%',
               style: GoogleFonts.spaceGrotesk(
