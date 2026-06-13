@@ -34,8 +34,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Web
-        # The base-href is very important for GitHub Pages
-        run: flutter build web --base-href /${{ github.event.repository.name }}/
+        run: flutter build web --base-href /
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
