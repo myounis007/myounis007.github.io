@@ -19,7 +19,7 @@ class _ContactSectionState extends State<ContactSection> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _messageController = TextEditingController();
-  
+
   bool _isSending = false;
   bool _isSent = false;
 
@@ -44,14 +44,8 @@ class _ContactSectionState extends State<ContactSection> {
       try {
         final response = await http.post(
           Uri.parse('https://formspree.io/f/mqeogyen'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode({
-            'name': name,
-            'email': email,
-            'message': message,
-          }),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'name': name, 'email': email, 'message': message}),
         );
 
         if (mounted) {
@@ -65,7 +59,9 @@ class _ContactSectionState extends State<ContactSection> {
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Failed to send message. Please try again later.'),
+                content: Text(
+                  'Failed to send message. Please try again later.',
+                ),
                 backgroundColor: Colors.redAccent,
               ),
             );
@@ -75,7 +71,9 @@ class _ContactSectionState extends State<ContactSection> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('An error occurred. Please check your internet connection.'),
+              content: Text(
+                'An error occurred. Please check your internet connection.',
+              ),
               backgroundColor: Colors.redAccent,
             ),
           );
@@ -103,13 +101,13 @@ class _ContactSectionState extends State<ContactSection> {
               final isDesktop = constraints.maxWidth > 900;
               return Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1100),
+                  constraints: const BoxConstraints(maxWidth: 950),
                   child: isDesktop
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(child: _buildContactInfo(context)),
-                            const SizedBox(width: 80),
+                            const SizedBox(width: 48),
                             Expanded(flex: 1, child: _buildForm(context)),
                           ],
                         )
@@ -138,7 +136,7 @@ class _ContactSectionState extends State<ContactSection> {
           child: Text(
             "Let's Build Something\nAmazing Together.",
             style: GoogleFonts.spaceGrotesk(
-              fontSize: 48,
+              fontSize: 40,
               fontWeight: FontWeight.w900,
               color: Theme.of(context).colorScheme.onSurface,
               height: 1.1,
@@ -151,9 +149,11 @@ class _ContactSectionState extends State<ContactSection> {
           child: Text(
             "I'm currently looking for new opportunities and my inbox is always open. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!",
             style: GoogleFonts.inter(
-              fontSize: 16,
+              fontSize: 15,
               height: 1.6,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
         ),
@@ -206,7 +206,8 @@ class _ContactSectionState extends State<ContactSection> {
                   _SocialBadge(
                     icon: Icons.work_rounded, // fallback for LinkedIn
                     label: "LinkedIn",
-                    url: "https://www.linkedin.com/in/myounis007", // Ensure correct URL
+                    url:
+                        "https://www.linkedin.com/in/myounis007", // Ensure correct URL
                   ),
                   _SocialBadge(
                     icon: Icons.code_rounded,
@@ -239,7 +240,9 @@ class _ContactSectionState extends State<ContactSection> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).primaryColor.withValues(alpha: 0.4),
+                    color: Theme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: 0.4),
                     blurRadius: 100,
                     spreadRadius: 20,
                   ),
@@ -267,14 +270,16 @@ class _ContactSectionState extends State<ContactSection> {
           ),
           // Form Glass Container
           ClipRRect(
-            borderRadius: BorderRadius.circular(32),
+            borderRadius: BorderRadius.circular(24),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
               child: Container(
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.4),
-                  borderRadius: BorderRadius.circular(32),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.surface.withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(24),
                   border: Border.all(
                     color: Colors.white.withValues(alpha: 0.1),
                     width: 1.5,
@@ -290,7 +295,8 @@ class _ContactSectionState extends State<ContactSection> {
                 ),
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
-                  transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
+                  transitionBuilder: (child, animation) =>
+                      FadeTransition(opacity: animation, child: child),
                   child: _isSent
                       ? _buildSuccessUI()
                       : Form(
@@ -303,7 +309,9 @@ class _ContactSectionState extends State<ContactSection> {
                                 style: GoogleFonts.spaceGrotesk(
                                   fontSize: 28,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                 ),
                               ),
                               const SizedBox(height: 32),
@@ -330,8 +338,9 @@ class _ContactSectionState extends State<ContactSection> {
                                   if (value == null || value.trim().isEmpty) {
                                     return 'Please enter your email';
                                   }
-                                  if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                      .hasMatch(value)) {
+                                  if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                                  ).hasMatch(value)) {
                                     return 'Please enter a valid email';
                                   }
                                   return null;
@@ -359,7 +368,9 @@ class _ContactSectionState extends State<ContactSection> {
                                     borderRadius: BorderRadius.circular(16),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
+                                        color: Theme.of(
+                                          context,
+                                        ).primaryColor.withValues(alpha: 0.3),
                                         blurRadius: 20,
                                         spreadRadius: 0,
                                         offset: const Offset(0, 8),
@@ -369,9 +380,15 @@ class _ContactSectionState extends State<ContactSection> {
                                   child: ElevatedButton(
                                     onPressed: _isSending ? null : _sendMessage,
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(context).primaryColor,
-                                      disabledBackgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.6),
-                                      padding: const EdgeInsets.symmetric(vertical: 20),
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor,
+                                      disabledBackgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor.withValues(alpha: 0.6),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                      ),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(16),
@@ -383,11 +400,15 @@ class _ContactSectionState extends State<ContactSection> {
                                             width: 24,
                                             child: CircularProgressIndicator(
                                               strokeWidth: 2,
-                                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                    Colors.white,
+                                                  ),
                                             ),
                                           )
                                         : Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Send Message',
@@ -399,7 +420,11 @@ class _ContactSectionState extends State<ContactSection> {
                                                 ),
                                               ),
                                               const SizedBox(width: 8),
-                                              const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+                                              const Icon(
+                                                Icons.send_rounded,
+                                                color: Colors.white,
+                                                size: 18,
+                                              ),
                                             ],
                                           ),
                                   ),
@@ -430,9 +455,16 @@ class _ContactSectionState extends State<ContactSection> {
             decoration: BoxDecoration(
               color: const Color(0xFF10B981).withValues(alpha: 0.1),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.3), width: 2),
+              border: Border.all(
+                color: const Color(0xFF10B981).withValues(alpha: 0.3),
+                width: 2,
+              ),
             ),
-            child: const Icon(Icons.check_rounded, color: Color(0xFF10B981), size: 48),
+            child: const Icon(
+              Icons.check_rounded,
+              color: Color(0xFF10B981),
+              size: 48,
+            ),
           ),
           const SizedBox(height: 32),
           Text(
@@ -449,7 +481,9 @@ class _ContactSectionState extends State<ContactSection> {
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               fontSize: 16,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.7),
               height: 1.6,
             ),
           ),
@@ -462,8 +496,13 @@ class _ContactSectionState extends State<ContactSection> {
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-              side: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1.5),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              side: BorderSide(
+                color: Colors.white.withValues(alpha: 0.1),
+                width: 1.5,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
             ),
             child: Text(
               'Send Another Message',
@@ -503,8 +542,19 @@ class _ContactSectionState extends State<ContactSection> {
           color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
         ),
         alignLabelWithHint: maxLines > 1,
-        contentPadding: const EdgeInsets.all(24),
-        prefixIcon: maxLines == 1 ? Icon(icon, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), size: 20) : null,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+        prefixIcon: maxLines == 1
+            ? Icon(
+                icon,
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.5),
+                size: 20,
+              )
+            : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
@@ -532,13 +582,12 @@ class _ContactSectionState extends State<ContactSection> {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(
-            color: Colors.redAccent,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 2),
         ),
         filled: true,
-        fillColor: Colors.black.withValues(alpha: 0.2), // Deep glassy look inside inputs
+        fillColor: Colors.black.withValues(
+          alpha: 0.2,
+        ), // Deep glassy look inside inputs
       ),
     );
   }
@@ -549,7 +598,11 @@ class _ContactItem extends StatefulWidget {
   final String title;
   final String text;
 
-  const _ContactItem({required this.icon, required this.title, required this.text});
+  const _ContactItem({
+    required this.icon,
+    required this.title,
+    required this.text,
+  });
 
   @override
   State<_ContactItem> createState() => _ContactItemState();
@@ -569,20 +622,16 @@ class _ContactItemState extends State<_ContactItem> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
-        transform: Matrix4.translationValues(
-          _isHovered ? 8.0 : 0.0,
-          0.0,
-          0.0,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        transform: Matrix4.translationValues(_isHovered ? 8.0 : 0.0, 0.0, 0.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface.withValues(
             alpha: _isHovered ? 0.4 : 0.2,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: _isHovered 
-                ? primaryColor.withValues(alpha: 0.4) 
+            color: _isHovered
+                ? primaryColor.withValues(alpha: 0.4)
                 : Colors.white.withValues(alpha: 0.05),
             width: 1.5,
           ),
@@ -599,7 +648,7 @@ class _ContactItemState extends State<_ContactItem> {
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: primaryColor.withValues(alpha: _isHovered ? 0.2 : 0.1),
                 shape: BoxShape.circle,
@@ -607,13 +656,9 @@ class _ContactItemState extends State<_ContactItem> {
                   color: primaryColor.withValues(alpha: _isHovered ? 0.5 : 0.2),
                 ),
               ),
-              child: Icon(
-                widget.icon, 
-                color: primaryColor, 
-                size: 24,
-              ),
+              child: Icon(widget.icon, color: primaryColor, size: 20),
             ),
-            const SizedBox(width: 24),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -621,15 +666,15 @@ class _ContactItemState extends State<_ContactItem> {
                   Text(
                     widget.title,
                     style: GoogleFonts.inter(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Text(
                     widget.text,
                     style: GoogleFonts.inter(
-                      fontSize: 18,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.onSurface,
                     ),
@@ -673,13 +718,13 @@ class _SocialBadgeState extends State<_SocialBadge> {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           decoration: BoxDecoration(
-            color: _isHovered 
-                ? Theme.of(context).primaryColor 
+            color: _isHovered
+                ? Theme.of(context).primaryColor
                 : Theme.of(context).colorScheme.surface.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
-              color: _isHovered 
-                  ? Theme.of(context).primaryColor 
+              color: _isHovered
+                  ? Theme.of(context).primaryColor
                   : Colors.white.withValues(alpha: 0.1),
               width: 1.5,
             ),
@@ -697,9 +742,11 @@ class _SocialBadgeState extends State<_SocialBadge> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                widget.icon, 
-                size: 18, 
-                color: _isHovered ? Colors.white : Theme.of(context).colorScheme.onSurface,
+                widget.icon,
+                size: 18,
+                color: _isHovered
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.onSurface,
               ),
               const SizedBox(width: 8),
               Text(
@@ -707,7 +754,9 @@ class _SocialBadgeState extends State<_SocialBadge> {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
-                  color: _isHovered ? Colors.white : Theme.of(context).colorScheme.onSurface,
+                  color: _isHovered
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],

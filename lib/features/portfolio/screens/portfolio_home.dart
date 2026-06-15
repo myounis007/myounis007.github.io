@@ -61,7 +61,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
           CustomScrollView(
             controller: _scrollController,
             slivers: [
-
               SliverToBoxAdapter(
                 child: Center(
                   child: ConstrainedBox(
@@ -81,7 +80,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                         const ExperienceSection(),
                         SizedBox(key: _contactKey, height: 60),
                         const ContactSection(),
-                        const SizedBox(height: 80),
+                        const SizedBox(height: 50),
                         const FooterSection(),
                       ],
                     ),
@@ -100,12 +99,19 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.6),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.surface.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(40),
                       border: Border.all(
-                        color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+                        color: Theme.of(
+                          context,
+                        ).primaryColor.withValues(alpha: 0.2),
                         width: 1,
                       ),
                       boxShadow: [
@@ -123,7 +129,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                                  color: Theme.of(
+                                    context,
+                                  ).primaryColor.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: FaIcon(
@@ -133,20 +141,43 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                                 ),
                               ),
                               const SizedBox(width: 16),
-                              _NavBtn(title: 'Home', onTap: () => _scrollTo(_homeKey)),
-                              _NavBtn(title: 'About', onTap: () => _scrollTo(_aboutKey)),
-                              _NavBtn(title: 'Skills', onTap: () => _scrollTo(_skillsKey)),
-                              _NavBtn(title: 'Projects', onTap: () => _scrollTo(_projectsKey)),
-                              _NavBtn(title: 'Experience', onTap: () => _scrollTo(_experienceKey)),
-                              _NavBtn(title: 'Contact', onTap: () => _scrollTo(_contactKey)),
+                              _NavBtn(
+                                title: 'Home',
+                                onTap: () => _scrollTo(_homeKey),
+                              ),
+                              _NavBtn(
+                                title: 'About',
+                                onTap: () => _scrollTo(_aboutKey),
+                              ),
+                              _NavBtn(
+                                title: 'Skills',
+                                onTap: () => _scrollTo(_skillsKey),
+                              ),
+                              _NavBtn(
+                                title: 'Projects',
+                                onTap: () => _scrollTo(_projectsKey),
+                              ),
+                              _NavBtn(
+                                title: 'Experience',
+                                onTap: () => _scrollTo(_experienceKey),
+                              ),
+                              _NavBtn(
+                                title: 'Contact',
+                                onTap: () => _scrollTo(_contactKey),
+                              ),
                               const SizedBox(width: 8),
                               IconButton(
                                 icon: Icon(
-                                  themeNotifier.value == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+                                  themeNotifier.value == ThemeMode.dark
+                                      ? Icons.light_mode
+                                      : Icons.dark_mode,
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  themeNotifier.value = themeNotifier.value == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+                                  themeNotifier.value =
+                                      themeNotifier.value == ThemeMode.dark
+                                      ? ThemeMode.light
+                                      : ThemeMode.dark;
                                 },
                               ),
                             ]
@@ -154,7 +185,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                                  color: Theme.of(
+                                    context,
+                                  ).primaryColor.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: FaIcon(
@@ -174,17 +207,23 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                               const SizedBox(width: 16),
                               IconButton(
                                 icon: Icon(
-                                  themeNotifier.value == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+                                  themeNotifier.value == ThemeMode.dark
+                                      ? Icons.light_mode
+                                      : Icons.dark_mode,
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  themeNotifier.value = themeNotifier.value == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+                                  themeNotifier.value =
+                                      themeNotifier.value == ThemeMode.dark
+                                      ? ThemeMode.light
+                                      : ThemeMode.dark;
                                 },
                               ),
                               Builder(
                                 builder: (context) => IconButton(
                                   icon: const Icon(Icons.menu, size: 20),
-                                  onPressed: () => Scaffold.of(context).openEndDrawer(),
+                                  onPressed: () =>
+                                      Scaffold.of(context).openEndDrawer(),
                                 ),
                               ),
                             ],
