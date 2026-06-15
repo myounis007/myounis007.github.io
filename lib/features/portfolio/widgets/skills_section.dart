@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'section_header.dart';
+import '../../../core/utils/fade_in_on_scroll.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -53,37 +54,46 @@ class SkillsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SectionHeader(title: 'Technical Expertise'),
-          const SizedBox(height: 60),
+          const SizedBox(height: 32),
           LayoutBuilder(
             builder: (context, constraints) {
-              final isDesktop = constraints.maxWidth > 900;
-              Widget flexLayout = Flex(
-                direction: isDesktop ? Axis.horizontal : Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: categories.map((category) {
-                  final card = _CategoryCard(category: category);
-                  return isDesktop
-                      ? Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              // Add spacing between cards on desktop
-                              left: category == categories.first ? 0 : 16,
-                              right: category == categories.last ? 0 : 16,
-                            ),
-                            child: card,
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(bottom: 32),
-                          child: card,
-                        );
-                }).toList(),
-              );
-
-              return isDesktop
-                  ? IntrinsicHeight(child: flexLayout)
-                  : flexLayout;
+              final isDesktop = constraints.maxWidth > 800;
+              
+              if (isDesktop) {
+                return Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: FadeInOnScroll(delay: 0.1, child: _CategoryCard(category: categories[0]))),
+                        const SizedBox(width: 24),
+                        Expanded(child: FadeInOnScroll(delay: 0.2, child: _CategoryCard(category: categories[1]))),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: FadeInOnScroll(delay: 0.3, child: _CategoryCard(category: categories[2]))),
+                        const SizedBox(width: 24),
+                        Expanded(child: FadeInOnScroll(delay: 0.4, child: _CategoryCard(category: categories[3]))),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return Column(
+                  children: List.generate(categories.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: FadeInOnScroll(
+                        delay: index * 0.1,
+                        child: _CategoryCard(category: categories[index]),
+                      ),
+                    );
+                  }),
+                );
+              }
             },
           ),
         ],
@@ -106,94 +116,99 @@ class _CategoryCardState extends State<_CategoryCard> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final primaryColor = theme.primaryColor;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
         transform: Matrix4.translationValues(
           0.0,
-          _isHovered ? -12.0 : 0.0,
+          _isHovered ? -8.0 : 0.0,
           0.0,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(24),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
             child: Container(
-              padding: const EdgeInsets.all(40),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface.withValues(
+                color: theme.colorScheme.surface.withValues(
                   alpha: _isHovered ? 0.3 : 0.15,
                 ),
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(
                   color: _isHovered
-                      ? Theme.of(context).primaryColor.withValues(alpha: 0.6)
+                      ? primaryColor.withValues(alpha: 0.4)
                       : Colors.white.withValues(alpha: 0.05),
                   width: 1.5,
                 ),
                 boxShadow: [
                   if (_isHovered)
                     BoxShadow(
-                      color: Theme.of(
-                        context,
-                      ).primaryColor.withValues(alpha: 0.15),
-                      blurRadius: 50,
-                      spreadRadius: 10,
+                      color: primaryColor.withValues(alpha: 0.15),
+                      blurRadius: 30,
+                      spreadRadius: -5,
                     ),
                 ],
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Theme.of(context).primaryColor.withValues(alpha: 0.15),
+                    primaryColor.withValues(alpha: 0.1),
                     Colors.transparent,
                   ],
                 ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Theme.of(
-                        context,
-                      ).primaryColor.withValues(alpha: 0.2),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(
-                            context,
-                          ).primaryColor.withValues(alpha: 0.4),
-                          blurRadius: 20,
-                          spreadRadius: 2,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: primaryColor.withValues(alpha: 0.15),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: primaryColor.withValues(alpha: 0.3),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryColor.withValues(alpha: 0.2),
+                              blurRadius: 10,
+                              spreadRadius: 1,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Icon(
-                      widget.category['icon'],
-                      color: Theme.of(context).primaryColor,
-                      size: 36,
-                    ),
+                        child: Icon(
+                          widget.category['icon'],
+                          color: primaryColor,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          widget.category['title'],
+                          style: GoogleFonts.spaceGrotesk(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 32),
-                  Text(
-                    widget.category['title'],
-                    style: GoogleFonts.spaceGrotesk(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      height: 1.2,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 24),
                   ...((widget.category['skills'] as List).map((skill) {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 28),
+                      padding: const EdgeInsets.only(bottom: 16),
                       child: _SkillRow(
                         name: skill['name'],
                         level: skill['level'],
@@ -223,17 +238,17 @@ class _SkillRow extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
               child: Text(
                 name,
                 style: GoogleFonts.inter(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.9),
+                  ).colorScheme.onSurface.withValues(alpha: 0.8),
                 ),
               ),
             ),
@@ -241,14 +256,14 @@ class _SkillRow extends StatelessWidget {
             Text(
               '${(level * 100).toInt()}%',
               style: GoogleFonts.spaceGrotesk(
-                fontSize: 16,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 8),
         Stack(
           children: [
             Container(
@@ -262,7 +277,7 @@ class _SkillRow extends StatelessWidget {
             ),
             TweenAnimationBuilder<double>(
               tween: Tween<double>(begin: 0, end: level),
-              duration: const Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 1500),
               curve: Curves.easeOutQuart,
               builder: (context, value, child) {
                 return FractionallySizedBox(
@@ -276,9 +291,9 @@ class _SkillRow extends StatelessWidget {
                         BoxShadow(
                           color: Theme.of(
                             context,
-                          ).primaryColor.withValues(alpha: 0.8),
-                          blurRadius: 8,
-                          spreadRadius: 1,
+                          ).primaryColor.withValues(alpha: 0.6),
+                          blurRadius: 6,
+                          spreadRadius: 0,
                         ),
                       ],
                     ),

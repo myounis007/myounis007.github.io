@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -145,30 +146,57 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             runSpacing: 12,
             children: _categories.map((category) {
               final isSelected = _selectedCategory == category;
-              return ChoiceChip(
-                label: Text(
-                  category,
-                  style: TextStyle(
-                    color: isSelected
-                        ? Colors.white
-                        : Theme.of(context).colorScheme.onSurface,
-                    fontWeight: isSelected
-                        ? FontWeight.bold
-                        : FontWeight.normal,
+              return Theme(
+                data: Theme.of(
+                  context,
+                ).copyWith(canvasColor: Colors.transparent),
+                child: ChoiceChip(
+                  label: Text(
+                    category,
+                    style: GoogleFonts.inter(
+                      color: isSelected
+                          ? Colors.white
+                          : Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.7),
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.w500,
+                      fontSize: 14,
+                    ),
                   ),
+                  selected: isSelected,
+                  selectedColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.surface.withValues(alpha: 0.2),
+                  elevation: isSelected ? 8 : 0,
+                  shadowColor: Theme.of(
+                    context,
+                  ).primaryColor.withValues(alpha: 0.4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : Colors.white.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
+                  ),
+                  onSelected: (selected) {
+                    setState(() {
+                      _selectedCategory = category;
+                    });
+                  },
                 ),
-                selected: isSelected,
-                selectedColor: Theme.of(context).primaryColor,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                onSelected: (selected) {
-                  setState(() {
-                    _selectedCategory = category;
-                  });
-                },
               );
             }).toList(),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 24),
           LayoutBuilder(
             builder: (context, constraints) {
               final isDesktop = constraints.maxWidth > 800;
@@ -179,7 +207,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                   crossAxisCount: isDesktop
                       ? 3
                       : (constraints.maxWidth > 600 ? 2 : 1),
-                  childAspectRatio: 0.85,
+                  childAspectRatio: 1.05,
                   crossAxisSpacing: 24,
                   mainAxisSpacing: 24,
                 ),
@@ -213,142 +241,193 @@ class _ProjectCardState extends State<_ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final primaryColor = theme.primaryColor;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        transform: Matrix4.translationValues(0.0, _isHovered ? -10.0 : 0.0, 0.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: _isHovered
-              ? [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
+        duration: const Duration(milliseconds: 300),
+        transform: Matrix4.translationValues(
+          0.0,
+          _isHovered ? -10.0 : 0.0,
+          0.0,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                  padding: const EdgeInsets.only(top: 24, left: 24, right: 24),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(16),
-                      ),
-                      border: Border.all(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.1),
-                        width: 2,
-                      ),
+          borderRadius: BorderRadius.circular(24),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface.withValues(
+                  alpha: _isHovered ? 0.3 : 0.15,
+                ),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: _isHovered
+                      ? primaryColor.withValues(alpha: 0.4)
+                      : Colors.white.withValues(alpha: 0.05),
+                  width: 1.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryColor.withValues(
+                      alpha: _isHovered ? 0.15 : 0.0,
                     ),
-                    child: Center(
-                      child: Icon(
-                        widget.project['category'] == 'Mobile'
-                            ? Icons.phone_android
-                            : Icons.web,
-                        size: 64,
-                        color: Theme.of(context).primaryColor.withValues(alpha: 0.5),
-                      ),
+                    blurRadius: 30,
+                    spreadRadius: -5,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Image/Icon Header area
+                  Expanded(
+                    flex: 4,
+                    child: Stack(
+                      children: [
+                        // Abstract glow
+                        Positioned(
+                          top: -20,
+                          right: -20,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            width: _isHovered ? 100 : 70,
+                            height: _isHovered ? 100 : 70,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: primaryColor.withValues(alpha: 0.2),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: primaryColor.withValues(alpha: 0.4),
+                                  blurRadius: 40,
+                                  spreadRadius: 10,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: AnimatedScale(
+                            scale: _isHovered ? 1.1 : 1.0,
+                            duration: const Duration(milliseconds: 300),
+                            child: Icon(
+                              widget.project['category'] == 'Mobile'
+                                  ? Icons.phone_android_rounded
+                                  : widget.project['category'] == 'Web'
+                                  ? Icons.web_rounded
+                                  : Icons.devices_rounded,
+                              size: 56,
+                              color: primaryColor.withValues(
+                                alpha: _isHovered ? 1.0 : 0.6,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // Content area
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  widget.project['title'],
+                                  style: GoogleFonts.spaceGrotesk(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  if (widget.project['github'].isNotEmpty)
+                                    InkWell(
+                                      onTap: () => launchUrl(
+                                        Uri.parse(widget.project['github']),
+                                      ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.github,
+                                        size: 20,
+                                        color: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.7),
+                                      ),
+                                    ),
+                                  const SizedBox(width: 16),
+                                  if (widget.project['demo'].isNotEmpty)
+                                    InkWell(
+                                      onTap: () => launchUrl(
+                                        Uri.parse(widget.project['demo']),
+                                      ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.upRightFromSquare,
+                                        size: 18,
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
                           Expanded(
                             child: Text(
-                              widget.project['title'],
+                              widget.project['description'],
+                              style: GoogleFonts.inter(
+                                fontSize: 13,
+                                height: 1.5,
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
+                              ),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: primaryColor.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: primaryColor.withValues(alpha: 0.2),
+                              ),
+                            ),
+                            child: Text(
+                              widget.project['stack'],
                               style: GoogleFonts.spaceGrotesk(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                color: primaryColor,
+                                fontWeight: FontWeight.w600,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Row(
-                            children: [
-                              if (widget.project['github'].isNotEmpty)
-                                InkWell(
-                                  onTap: () => launchUrl(
-                                    Uri.parse(widget.project['github']),
-                                  ),
-                                  child: const FaIcon(
-                                    FontAwesomeIcons.github,
-                                    size: 20,
-                                  ),
-                                ),
-                              const SizedBox(width: 12),
-                              if (widget.project['demo'].isNotEmpty)
-                                InkWell(
-                                  onTap: () => launchUrl(
-                                    Uri.parse(widget.project['demo']),
-                                  ),
-                                  child: const FaIcon(
-                                    FontAwesomeIcons.upRightFromSquare,
-                                    size: 18,
-                                  ),
-                                ),
-                            ],
-                          ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        widget.project['description'],
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.7),
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const Spacer(),
-                      Text(
-                        widget.project['stack'],
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

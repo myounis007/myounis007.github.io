@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
-import 'features/portfolio/screens/loading_screen.dart';
+import 'features/portfolio/screens/portfolio_home.dart';
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -16,7 +16,7 @@ class PortfolioApp extends StatelessWidget {
           themeMode: currentMode,
           theme: buildAppTheme(Brightness.light),
           darkTheme: buildAppTheme(Brightness.dark),
-          home: const LoadingScreen(),
+          home: const PortfolioHome(),
         );
       },
     );
